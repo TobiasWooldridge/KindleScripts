@@ -28,7 +28,6 @@ Used for installing/running debian as a chroot on a Kindle (my build env of choi
 ./debian/chroot-debian # Chroot into debian
 ```
 
-
 Draw
 ----
 

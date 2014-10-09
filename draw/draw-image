@@ -1,15 +1,12 @@
 #!/bin/bash
 
-# Explode the image into its bytes
-
+# Explode the image into its bytes and write them to the framebuffer
 if [ -z "$1" ]
   then
-    python image-to-binary.py -i test.png -o output.bin -w 768 -h 1024
+    python image_to_binary.py -i test.png -o /dev/fb0 -w 768 -h 1024
   else
-    python image-to-binary.py -i $1 -o output.bin -w 768 -h 1024
+    python image_to_binary.py -i $1 -o /dev/fb0 -w 768 -h 1024
 fi
-# Dump the bytes to the frame buffer
-dd if=output.bin of=/dev/fb0 bs=768 count=1024
 
 # Force a screen refresh
 echo 1 > /sys/devices/platform/mxc_epdc_fb/mxc_epdc_update

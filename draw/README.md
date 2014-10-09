@@ -14,7 +14,7 @@ Usage
 
 ```
 # Explode the image into its bytes
-python image-to-binary.py -i input.png -o output.bin -w 768 -h 1024
+python image_to_binary.py -i input.png -o output.bin -w 768 -h 1024
 
 # Dump the bytes to the frame buffer
 dd if=output.bin of=/dev/fb0 bs=768 count=1024
