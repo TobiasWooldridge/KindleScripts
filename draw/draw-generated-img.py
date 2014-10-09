@@ -26,6 +26,6 @@ del draw
 im = im.transpose(Image.ROTATE_270)
 
 
-im.show()
-# image_to_bytes_to_file(im, "/dev/fb0")
+# im.show()
+image_to_bytes_to_file(im, "/dev/fb0")
 
