@@ -9,5 +9,6 @@ mount -o bind /dev/pts /mnt/debian/dev/pts
 mount -o bind /proc /mnt/debian/proc
 mount -o bind /sys /mnt/debian/sys
 cp /etc/hosts /mnt/debian/etc/hosts
+cp /etc/resolv.conf /mnt/debian/etc/resolv.conf
 
 mntroot ro
