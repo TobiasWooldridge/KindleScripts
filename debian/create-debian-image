@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Run this script on a debian machine to create an ext3 system image containing Debian using the armel architecture
+
+# For more info, see http://wiki.mobileread.com/wiki/Debian_Installation_on_Kindle_Touch
+
+apt-get install debootstrap
+
+# Clearing existing kindle files
+umount /mnt/debian
+rm /tmp/debian.ext3
+
+# Create the filesystem
+dd if=/dev/zero of=/tmp/debian.ext3 bs=1M count=750
+echo 'y' | mkfs.ext3 /tmp/debian.ext3
+tune2fs -i 0 -c 0 /tmp/debian.ext3
+
+# Mount the filesystem
+mount -o loop -t ext3 /tmp/debian.ext3 /mnt/debian
+
+# We bootstrap wheezy because it uses a sufficiently old linux kernel version to be compatibile with the Kindle PaperWhite's
+debootstrap --arch=armel --foreign wheezy /mnt/debian http://ftp.us.debian.org/debian
+
+# Unmount it and shrink the file if we can
+umount /mnt/debian
+
+ls -lah /tmp/debian.ext3
+echo "Debian kindle image created at /tmp/debian.ext3"
