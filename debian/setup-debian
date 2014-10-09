@@ -16,4 +16,6 @@ deb-src http://security.debian.org/ wheezy/updates main contrib non-free
 
 
 chroot /mnt/debian apt-get update
-chroot /mnt/debian apt-get install x11-common x11-utils x11-apps
+chroot /mnt/debian apt-get install python python-imaging git -y
+chroot /mnt/debian apt-get clean
+chroot /mtn/debian https://github.com/TobiasWooldridge/KindleScripts.git /root/scripts
