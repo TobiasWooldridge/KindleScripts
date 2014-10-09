@@ -23,7 +23,7 @@ draw.text((25, 65), mainText, font=mainFont, fill=foreground_color)
 draw.text((50, 600), subText, font=subFont, fill=foreground_color)
 del draw
 
-im = im.transpose(Image.ROTATE_90)
+im = im.transpose(Image.ROTATE_270)
 
 
 im.show()
