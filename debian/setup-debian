@@ -1,0 +1,19 @@
+#!/bin/bash
+chroot /mnt/debian /debootstrap/debootstrap --second-stage
+
+# Copy the kindle's DNS servers to the debian image
+cp /etc/resolv.conf /mnt/debian/etc/resolv.conf
+
+echo "deb http://ftp.au.debian.org/debian stable main contrib non-free
+deb-src http://ftp.au.debian.org/debian stable main contrib non-free
+
+deb http://ftp.debian.org/debian/ wheezy-updates main contrib non-free
+deb-src http://ftp.debian.org/debian/ wheezy-updates main contrib non-free
+
+deb http://security.debian.org/ wheezy/updates main contrib non-free
+deb-src http://security.debian.org/ wheezy/updates main contrib non-free
+" >> /mnt/debian/etc/apt/sources.list
+
+
+chroot /mnt/debian apt-get update
+chroot /mnt/debian apt-get install x11-common x11-utils x11-apps

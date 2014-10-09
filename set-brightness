@@ -1,0 +1,2 @@
+#!/bin/bash
+echo -n $1 > /sys/devices/system/fl_tps6116x/fl_tps6116x0/fl_intensity

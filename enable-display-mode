@@ -1,0 +1,3 @@
+#!/bin/bash
+bash ./set-brightness 254
+bash ./prevent-ss

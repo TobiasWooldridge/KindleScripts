@@ -1,0 +1,11 @@
+#!/bin/bash
+# http://wiki.mobileread.com/wiki/Debian_Installation_on_Kindle_Touch
+mntroot rw # Make filesystem writable temporarily
+
+umount -f /mnt/debian/dev/pts
+umount -f /mnt/debian/dev
+umount -f /mnt/debian/proc
+umount -f /mnt/debian/sys
+umount -f /mnt/debian
+
+mntroot ro

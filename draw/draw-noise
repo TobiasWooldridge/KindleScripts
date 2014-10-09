@@ -1,0 +1,2 @@
+dd if=/dev/urandom of=/dev/fb0 bs=768 count=1024
+echo 1 > /sys/devices/platform/mxc_epdc_fb/mxc_epdc_update

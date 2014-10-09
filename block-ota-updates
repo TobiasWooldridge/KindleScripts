@@ -1,0 +1,2 @@
+#!/bin/bash
+mkdir -p /mnt/us/update.bin.tmp.partial/

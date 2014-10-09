@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+  then
+    lipc-set-prop com.lab126.powerd preventScreenSaver 1
+  else
+    lipc-set-prop com.lab126.powerd preventScreenSaver $1
+fi
+

@@ -1,0 +1,13 @@
+#!/bin/bash
+mntroot rw # Make filesystem writable temporarily
+mkdir -p /mnt/debian
+
+# http://wiki.mobileread.com/wiki/Debian_Installation_on_Kindle_Touch
+mount -o loop -t ext3 /mnt/base-us/debian.ext3 /mnt/debian
+mount -o bind /dev /mnt/debian/dev
+mount -o bind /dev/pts /mnt/debian/dev/pts
+mount -o bind /proc /mnt/debian/proc
+mount -o bind /sys /mnt/debian/sys
+cp /etc/hosts /mnt/debian/etc/hosts
+
+mntroot ro
