@@ -32,6 +32,6 @@ Notes
 
 * The PaperWhite's display size is 768x1024
 
-* The '(eips)[http://wiki.mobileread.com/wiki/Eips]' command (exists by default on kindle) seems to use some form of pixel scaling or similar that I didn't care to investigate, hence I wrote this. It is still useful for clearing the screen/etc.
+* The [eips](http://wiki.mobileread.com/wiki/Eips) command (exists by default on kindle) seems to use some form of pixel scaling or similar that I didn't care to investigate, hence I wrote this. It is still useful for clearing the screen/etc.
 
 * Because some parts of your kindle's display update automatically (e.g. the time), it's probably best to use this while the screensaver is enabled (as that ensures the Kindle firmware won't try to update the display)
