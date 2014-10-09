@@ -28,9 +28,9 @@ draw.text((50, 690), subTextTwo, font=subFontTwo, fill=foreground_color)
 del draw
 
 
-# im = im.transpose(Image.ROTATE_270)
-# image_to_bytes_to_file(im, "/dev/fb0")
+im = im.transpose(Image.ROTATE_270)
+image_to_bytes_to_file(im, "/dev/fb0")
 
 
-im.show()
+# im.show()
 

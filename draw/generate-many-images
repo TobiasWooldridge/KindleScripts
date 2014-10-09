@@ -1,0 +1,7 @@
+#!/bin/bash
+while [ 1 ]
+do
+    python ./draw-generated-img.py
+    bash ../refresh-display
+    sleep 10
+done
