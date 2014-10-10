@@ -4,12 +4,25 @@ import random
 import platform
 import subprocess
 from image_to_binary import *
+import time
 
 class Kindle:
     @staticmethod
     def _command(command):
         proc = subprocess.Popen(command, stdout=subprocess.PIPE)
         return proc.stdout.read()
+
+    @staticmethod
+    def display_image(im):
+        if Kindle.on_kindle():
+            im = im.transpose(Image.ROTATE_270)
+            image_to_bytes_to_file(im, "/dev/fb0")
+            Kindle.refresh_screen()
+        else:
+            im.show()
+
+    def refresh_screen():
+        Kindle._command("echo 1 > /sys/devices/platform/mxc_epdc_fb/mxc_epdc_update")
 
     @staticmethod
     def on_kindle():
@@ -49,11 +62,9 @@ class FrameGenerator:
         return im
 
 fb = FrameGenerator()
-im = fb.generate_waiting_image(Kindle.battery_capacity())
 
-if Kindle.on_kindle():
-    im = im.transpose(Image.ROTATE_270)
-    image_to_bytes_to_file(im, "/dev/fb0")
-else:
-    im.show()
+while True:
+    im = fb.generate_waiting_image(Kindle.battery_capacity())
+    Kindle.display_image(im)
+    time.sleep(60)
 
