@@ -23,8 +23,8 @@ class Kindle:
 
     @staticmethod
     def refresh_screen():
-        Kindle._command("echo 1 > /sys/devices/platform/mxc_epdc_fb/mxc_epdc_update")
-
+        Kindle._command(["../refresh-display"])
+    
     @staticmethod
     def on_kindle():
         return 'kindle' in Kindle._command(['uname', '-a'])
@@ -32,7 +32,7 @@ class Kindle:
     @staticmethod
     def battery_capacity():
         if Kindle.on_kindle():
-            return int(Kindle._command(["cat", "/sys/devices/system/yoshi_battery/yoshi_battery0/battery_capacity"])[:-1])
+            return int(Kindle._command(["cat", "/sys/devices/system/yoshi_battery/yoshi_battery0/battery_capacity"])[:-2])
         else:
             return random.randint(0, 99);
 
