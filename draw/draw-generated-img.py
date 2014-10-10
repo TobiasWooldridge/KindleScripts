@@ -31,7 +31,7 @@ class Kindle:
     @staticmethod
     def battery_capacity():
         if Kindle.on_kindle():
-            return int(Kindle._command("cat /sys/devices/system/yoshi_battery/yoshi_battery0/battery_capacity")[:-1])
+            return int(Kindle._command(["cat", "/sys/devices/system/yoshi_battery/yoshi_battery0/battery_capacity"])[:-1])
         else:
             return random.randint(0, 99);
 
