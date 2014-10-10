@@ -1,3 +1,4 @@
 #!/bin/bash
-bash ./set-brightness 254
-bash ./prevent-ss
+source ./hide-top-bar
+source ./set-brightness 254
+source ./prevent-ss
