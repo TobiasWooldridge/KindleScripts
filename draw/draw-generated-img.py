@@ -8,11 +8,9 @@ resolution = (1024, 768)
 background_color = (255)
 foreground_color = (0)
 
-
 mainFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 555)
 subFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 45)
 subFontTwo = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 25)
-
 
 mainText = "{: >2d}m".format(random.randint(0, 25)).rjust(3)
 subText="Until the next Loop Bus arrives"
@@ -30,7 +28,4 @@ del draw
 
 im = im.transpose(Image.ROTATE_270)
 image_to_bytes_to_file(im, "/dev/fb0")
-
-
-# im.show()
 

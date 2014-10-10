@@ -1,0 +1,4 @@
+#!/bin/bash
+lipc-set-prop com.lab126.pillow disableEnablePillow disable
+
+# Thanks, eureka! Source: http://www.mobileread.com/forums/archive/index.php/t-207872.html
