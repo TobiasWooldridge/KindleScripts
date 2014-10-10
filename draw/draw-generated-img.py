@@ -21,6 +21,7 @@ class Kindle:
         else:
             im.show()
 
+    @staticmethod
     def refresh_screen():
         Kindle._command("echo 1 > /sys/devices/platform/mxc_epdc_fb/mxc_epdc_update")
 
@@ -63,8 +64,11 @@ class FrameGenerator:
 
 fb = FrameGenerator()
 
+capacity = 0
 while True:
-    im = fb.generate_waiting_image(Kindle.battery_capacity())
-    Kindle.display_image(im)
-    time.sleep(60)
+    if capacity != Kindle.battery_capacity():
+        capacity = Kindle.battery_capacity()
+        im = fb.generate_waiting_image(capacity)
+        Kindle.display_image(im)
+    time.sleep(1)
 
