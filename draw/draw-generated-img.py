@@ -24,7 +24,7 @@ class Kindle:
     @staticmethod
     def refresh_screen():
         Kindle._command(["../refresh-display"])
-    
+
     @staticmethod
     def on_kindle():
         return 'kindle' in Kindle._command(['uname', '-a'])
@@ -50,6 +50,10 @@ class FrameGenerator:
         mainText = "{: >2d}m".format(time).rjust(3)
         subText="Until the next Loop Bus arrives"
         subTextTwo="Get the app, http://fake.url/"
+
+        # Because we're using LiberationMono, 0 has a dot in the middle but O doesn't
+        mainText = mainText.replace('0', 'O')
+
 
         im = Image.new('L', self.resolution, self.background_color)
 
