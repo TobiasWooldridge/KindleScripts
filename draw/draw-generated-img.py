@@ -42,7 +42,7 @@ class FrameGenerator:
     background_color = (255)
     foreground_color = (0)
 
-    mainFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 555)
+    mainFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 600)
     mainTailFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 150)
     smallFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 45)
     tinyFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 25)
@@ -60,9 +60,9 @@ class FrameGenerator:
         im = Image.new('L', self.resolution, self.background_color)
 
         draw  =  ImageDraw.Draw(im)
-        draw.text((10, 35), mainText, font=self.mainFont, fill=self.foreground_color)
-        draw.text((700, 375), mainTailText, font=self.mainTailFont, fill=self.foreground_color)
-        draw.text((10, 65), "___", font=self.mainFont, fill=self.foreground_color)
+        draw.text((10, 0), mainText, font=self.mainFont, fill=self.foreground_color)
+        draw.text((730, 375), mainTailText, font=self.mainTailFont, fill=self.foreground_color)
+        draw.text((0, 15), "___", font=self.mainFont, fill=self.foreground_color)
         draw.text((50, 630), subText, font=self.smallFont, fill=self.foreground_color)
         draw.text((50, 690), subTextTwo, font=self.tinyFont, fill=self.foreground_color)
         del draw
