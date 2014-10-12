@@ -43,8 +43,8 @@ class FrameGenerator:
     foreground_color = (0)
 
     mainFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 600)
-    mainTailFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 150)
-    smallFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 45)
+    mainTailFont = ImageFont.truetype("./fonts/LiberationSans-Regular.ttf", 150)
+    smallFont = ImageFont.truetype("./fonts/LiberationSans-Regular.ttf", 45)
     tinyFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 25)
 
     def generate_waiting_image(self, time):
@@ -61,7 +61,7 @@ class FrameGenerator:
 
         draw  =  ImageDraw.Draw(im)
         draw.text((10, 0), mainText, font=self.mainFont, fill=self.foreground_color)
-        draw.text((730, 375), mainTailText, font=self.mainTailFont, fill=self.foreground_color)
+        draw.text((750, 365), mainTailText, font=self.mainTailFont, fill=self.foreground_color)
         draw.text((0, 15), "___", font=self.mainFont, fill=self.foreground_color)
         draw.text((50, 630), subText, font=self.smallFont, fill=self.foreground_color)
         draw.text((50, 690), subTextTwo, font=self.tinyFont, fill=self.foreground_color)
@@ -72,11 +72,15 @@ class FrameGenerator:
 fb = FrameGenerator()
 
 
-capacity = 0
-while True:
-    if capacity != Kindle.battery_capacity():
-        capacity = Kindle.battery_capacity()
-        im = fb.generate_waiting_image(capacity)
-        Kindle.display_image(im)
-    time.sleep(10)
+capacity = Kindle.battery_capacity()
+im = fb.generate_waiting_image(capacity)
+Kindle.display_image(im)
+
+# capacity = 0
+# while True:
+#     if capacity != Kindle.battery_capacity():
+#         capacity = Kindle.battery_capacity()
+#         im = fb.generate_waiting_image(capacity)
+#         Kindle.display_image(im)
+#     time.sleep(10)
 

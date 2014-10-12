@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# This script makes it safe to use the Kindle as a display (by
+# letting you write to the framebuffer without needing to worry
+# about the Kindle drawing over your stuff)
+
 source ./hide-top-bar
 source ./set-brightness 254
 source ./prevent-ss
