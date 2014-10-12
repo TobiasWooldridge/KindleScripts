@@ -43,11 +43,13 @@ class FrameGenerator:
     foreground_color = (0)
 
     mainFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 555)
+    mainTailFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 150)
     smallFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 45)
     tinyFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 25)
 
     def generate_waiting_image(self, time):
-        mainText = "{: >2d}m".format(time).rjust(3)
+        mainText = "{: >2d} ".format(time).rjust(3)
+        mainTailText = "min"
         subText="Until the next Loop Bus arrives"
         subTextTwo="Get the app, http://fake.url/"
 
@@ -59,6 +61,7 @@ class FrameGenerator:
 
         draw  =  ImageDraw.Draw(im)
         draw.text((10, 35), mainText, font=self.mainFont, fill=self.foreground_color)
+        draw.text((700, 375), mainTailText, font=self.mainTailFont, fill=self.foreground_color)
         draw.text((10, 65), "___", font=self.mainFont, fill=self.foreground_color)
         draw.text((50, 630), subText, font=self.smallFont, fill=self.foreground_color)
         draw.text((50, 690), subTextTwo, font=self.tinyFont, fill=self.foreground_color)
@@ -68,11 +71,12 @@ class FrameGenerator:
 
 fb = FrameGenerator()
 
+
 capacity = 0
 while True:
     if capacity != Kindle.battery_capacity():
         capacity = Kindle.battery_capacity()
         im = fb.generate_waiting_image(capacity)
         Kindle.display_image(im)
-    time.sleep(1)
+    time.sleep(10)
 
