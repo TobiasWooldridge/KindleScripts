@@ -3,6 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 import platform
 import time
 from kindle import Kindle
+import datetime
 
 class FrameGenerator:
     resolution = (1024, 768)
@@ -15,8 +16,8 @@ class FrameGenerator:
     smallFont = ImageFont.truetype("./fonts/LiberationSans-Regular.ttf", 45)
     tinyFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 25)
 
-    def generate_waiting_image(self, time):
-        mainText = "{: >2d} ".format(time).rjust(3)
+    def generate_waiting_image(self, mins):
+        mainText = "{: >2d} ".format(mins).rjust(3)
         mainTailText = "min"
         subText="Until the next Loop Bus arrives"
         subTextTwo="Get the app, http://fake.url/"
@@ -40,15 +41,20 @@ class FrameGenerator:
 fb = FrameGenerator()
 
 
-capacity = Kindle.battery_capacity()
-im = fb.generate_waiting_image(capacity)
-Kindle.display_image(im)
+# capacity = Kindle.battery_capacity()
+# im = fb.generate_waiting_image(capacity)
+# Kindle.display_image(im)
 
-# capacity = 0
-# while True:
-#     if capacity != Kindle.battery_capacity():
-#         capacity = Kindle.battery_capacity()
-#         im = fb.generate_waiting_image(capacity)
-#         Kindle.display_image(im)
-#     time.sleep(10)
+def getMins():
+    dt = datetime.datetime.now()
+    return 20 - ((dt.minute - 6 + 20) % 20)
+
+mins = 0
+while True:
+    if mins != getMins():
+        mins = getMins()
+        im = fb.generate_waiting_image(mins)
+        Kindle.display_image(im)
+
+    time.sleep(1)
 
