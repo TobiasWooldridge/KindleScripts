@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /mnt/base-us/scripts
+source enable-display-mode
+source debian/mount-debian
+
+chroot /mnt/debian /bin/bash /root/scripts/start-sign-from-debian
