@@ -3,57 +3,88 @@ from PIL import Image, ImageDraw, ImageFont
 import platform
 import time
 from kindle import Kindle
+from pytz import timezone
 import datetime
 
-class FrameGenerator:
-    resolution = (1024, 768)
+class BaseFrame:
+    _resolution = (1024, 768)
 
-    background_color = (255)
-    foreground_color = (0)
+    _bg_color = (255)
+    _fg_color = (0)
+    _pale_color = (128)
 
-    mainFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 600)
-    mainTailFont = ImageFont.truetype("./fonts/LiberationSans-Regular.ttf", 150)
-    smallFont = ImageFont.truetype("./fonts/LiberationSans-Regular.ttf", 45)
-    tinyFont = ImageFont.truetype("./fonts/LiberationMono-Regular.ttf", 25)
+    def __init__(self):
+        self._monoRegular = "./fonts/LiberationMono-Regular.ttf"
+        self._sansRegular = "./fonts/LiberationSans-Regular.ttf"
 
-    def generate_waiting_image(self, mins):
-        mainText = "{: >2d} ".format(mins).rjust(3)
-        mainTailText = "min"
-        subText="Until the next Loop Bus arrives"
-        subTextTwo="Get the app, http://fake.url/"
+        self._batteryFont = ImageFont.truetype(self._sansRegular, 20)
 
-        # Because we're using LiberationMono, 0 has a dot in the middle but O doesn't
-        mainText = mainText.replace('0', 'O')
+    def draw_frame(self, draw, state):
+        """ This is a no-op"""
+
+    def _draw_battery_warning(self, draw, capacity):
+        color = self._pale_color
+
+        if capacity < 5:
+            color = self._fg_color
+            warning = "This screen may be frozen."
+        if capacity < 15:
+            warning = "This screen may freeze soon."
+        else:
+            warning = "Power may have been disconnected."
 
 
-        im = Image.new('L', self.resolution, self.background_color)
+        draw.text((50, 730), "Warning: Battery capacity is {0}%. {1}".format(capacity, warning), font=self._batteryFont, fill=self._pale_color)
 
-        draw  =  ImageDraw.Draw(im)
-        draw.text((10, 0), mainText, font=self.mainFont, fill=self.foreground_color)
-        draw.text((750, 365), mainTailText, font=self.mainTailFont, fill=self.foreground_color)
-        draw.text((0, 15), "___", font=self.mainFont, fill=self.foreground_color)
-        draw.text((50, 630), subText, font=self.smallFont, fill=self.foreground_color)
-        draw.text((50, 690), subTextTwo, font=self.tinyFont, fill=self.foreground_color)
-        del draw
+    def draw(self, state):
+        im = Image.new('LA', self._resolution, self._bg_color)
+        draw = ImageDraw.Draw(im)
+
+        self._draw_battery_warning(draw, Kindle.battery_capacity())
+        self.draw_frame(draw, state)
 
         return im
 
-fb = FrameGenerator()
+class BusTimeFrame(BaseFrame):
+    def __init__(self):
+        BaseFrame.__init__(self)
 
+        self._mainFont = ImageFont.truetype(self._monoRegular, 600)
+        self._mainTailFont = ImageFont.truetype(self._sansRegular, 150)
+        self._smallFont = ImageFont.truetype(self._sansRegular, 45)
+        self._tinyFont = ImageFont.truetype(self._sansRegular, 25)
+
+    def draw_frame(self, draw, state):
+        mainText = "{: >2d} ".format(state['mins']).rjust(3)
+        mainTailText = "min"
+        subText="Until the next Loop Bus arrives"
+        subTextTwo="Get the app or track the bus online: http://loopb.us/"
+
+        # Because we're using LiberationMono, 0 has a dot in the middle but O doesn't, meaning O looks nicer
+        mainText = mainText.replace('0', 'O')
+
+        draw.text((10, 0), mainText, font=self._mainFont, fill=self._fg_color)
+        draw.text((750, 365), mainTailText, font=self._mainTailFont, fill=self._fg_color)
+        draw.text((0, 15), "___", font=self._mainFont, fill=self._fg_color)
+        draw.text((50, 630), subText, font=self._smallFont, fill=self._fg_color)
+        draw.text((50, 690), subTextTwo, font=self._tinyFont, fill=self._fg_color)
+
+fb = BusTimeFrame()
 
 # capacity = Kindle.battery_capacity()
 # im = fb.generate_waiting_image(capacity)
 # Kindle.display_image(im)
 
 def getMins():
-    dt = datetime.datetime.now()
+    adelaide = timezone("Australia/Adelaide")
+    dt = datetime.datetime.now(adelaide)
     return 20 - ((dt.minute - 6 + 20) % 20)
 
 mins = 0
 while True:
     if mins != getMins():
         mins = getMins()
-        im = fb.generate_waiting_image(mins)
+        im = fb.draw({ 'mins' : mins})
         Kindle.display_image(im)
 
     time.sleep(1)
