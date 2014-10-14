@@ -1,3 +1,4 @@
 #!/bin/bash
 
 screen -d -m bash -c "cd /root/scripts/draw/ && python draw-generated-img.py"
+
