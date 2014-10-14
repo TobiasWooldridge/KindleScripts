@@ -23,12 +23,15 @@ class BaseFrame:
         """ This is a no-op"""
 
     def _draw_battery_warning(self, draw, capacity):
+        if capacity > 50:
+            return
+
         color = self._pale_color
 
         if capacity < 5:
             color = self._fg_color
             warning = "This screen may be frozen."
-        if capacity < 15:
+        elif capacity < 15:
             warning = "This screen may freeze soon."
         else:
             warning = "Power may have been disconnected."
