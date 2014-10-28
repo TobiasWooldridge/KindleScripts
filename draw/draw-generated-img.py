@@ -5,6 +5,10 @@ import time
 from kindle import Kindle
 from pytz import timezone
 import datetime
+import json
+import urllib2
+import math
+
 
 class BaseFrame:
     _resolution = (1024, 768)
@@ -79,14 +83,27 @@ fb = BusTimeFrame()
 # Kindle.display_image(im)
 
 def getMins():
-    adelaide = timezone("Australia/Adelaide")
-    dt = datetime.datetime.now(adelaide)
-    return 20 - ((dt.minute - 6 + 20) % 20)
+    print "Loading predictions"
+    predictions = json.load(urllib2.urlopen('http://tracker.tobias.tw/predictions.php'))
 
-mins = 0
+
+    silcPrediction = None
+    for prediction in predictions:
+        if prediction['id'] == 5:
+            silcPrediction = prediction
+            break
+
+    return int(math.floor(silcPrediction['prediction'] / 60.0))
+
+    # adelaide = timezone("Australia/Adelaide")
+    # dt = datetime.datetime.now(adelaide)
+    
+
+mins = -1
 while True:
-    if mins != getMins():
-        mins = getMins()
+    latestMins = getMins()
+    if mins != latestMins:
+        mins = latestMins
         im = fb.draw({ 'mins' : mins})
         Kindle.display_image(im)
 
