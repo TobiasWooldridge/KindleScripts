@@ -41,3 +41,14 @@ Used for drawing images to the Kindle's display. See [draw/README.md](draw/READM
 
 
 
+
+
+Backing up a kindle
+----
+
+```
+ssh root@192.168.15.244 "dd if=/dev/mmcblk0p1" | gzip --best - | dd of=mmcblk0p1.img.gz
+ssh root@192.168.15.244 "dd if=/dev/mmcblk0p2" | gzip --best - | dd of=mmcblk0p2.img.gz
+ssh root@192.168.15.244 "dd if=/dev/mmcblk0p3" | gzip --best - | dd of=mmcblk0p3.img.gz
+ssh root@192.168.15.244 "dd if=/dev/mmcblk0p4" | gzip --best - | dd of=mmcblk0p4.img.gz
+```
